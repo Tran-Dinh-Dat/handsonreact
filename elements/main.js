@@ -35,20 +35,48 @@ const root = ReactDOM.createRoot(rootElement)
 //   </React.Fragment>
 // )
 
-function renderElement() {
-  const element = (
-    <div className="post">
-      <h1>My first blog post</h1>
-      <div>Author: Mark Twain</div>
-      <div>Published: {new Date().toLocaleTimeString()}</div>
-      <p>
-        I am new to blogging and this is my first post. You should expect a lot of great things from me.
-      </p>
-    </div>
-  )
+// function renderElement() {
+//   const element = (
+//     <div className="post">
+//       <h1>My first blog post</h1>
+//       <div>Author: Mark Twain</div>
+//       <div>Published: {new Date().toLocaleTimeString()}</div>
+//       <p>
+//         I am new to blogging and this is my first post. You should expect a lot of great things from me.
+//       </p>
+//     </div>
+//   )
 
-  root.render(element)
+//   root.render(element)
+// }
+
+// setInterval(renderElement, 1000)
+
+// ReactDOM.createRoot(rootElement).render(element)
+
+
+// const element = <div className="container">Hello element</div>
+// ReactDOM.createRoot(rootElement).render(element)
+
+// function HelloWorld() {
+//   return <div className="container">Hello Function Component</div>
+// }
+
+class HelloWorld extends React.Component {
+  render() {
+    return <div className="container">Hello class component</div>
+  }
 }
 
-setInterval(renderElement, 1000)
-// ReactDOM.createRoot(rootElement).render(element)
+function App() {
+  return (
+    <div>
+      <HelloWorld/>
+      <HelloWorld/>
+      <HelloWorld/>
+      <HelloWorld/>
+    </div>
+  )
+}
+
+root.render(<App/>)
