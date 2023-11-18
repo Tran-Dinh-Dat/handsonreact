@@ -5,6 +5,7 @@ import Button from './Button';
 import Greeter from './Greeter';
 import Hello from './Hello';
 import FruitList from './FruitList';
+import Parent from './components/Parent';
 
 function App() {
   const data = [
@@ -21,6 +22,7 @@ function App() {
         <Greeter first="Dat" last='Tran Dinh'/>
         <Hello name='Dat' enthusiasmLevel={1}/>
         <FruitList fruits={data}/>
+        <Parent/>
       </div>
     </div>
   );
