@@ -7,3 +7,21 @@ form {
   display: flex;
   flex-direction: column;
 }
+
+html,
+body,
+#root
+.container {
+  height: 100%;
+}
+
+.center-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  justify-content: center;
+}
