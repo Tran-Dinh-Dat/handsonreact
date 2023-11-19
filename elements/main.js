@@ -62,21 +62,126 @@ const root = ReactDOM.createRoot(rootElement)
 //   return <div className="container">Hello Function Component</div>
 // }
 
-class HelloWorld extends React.Component {
-  render() {
-    return <div className="container">Hello class component</div>
+// class HelloWorld extends React.Component {
+//   render() {
+//     return <div className="container">Hello class component</div>
+//   }
+// }
+
+// function App() {
+//   return (
+//     <div>
+//       <HelloWorld/>
+//       <HelloWorld/>
+//       <HelloWorld/>
+//       <HelloWorld/>
+//     </div>
+//   )
+// }
+
+// root.render(<App/>)
+
+const okUrl = 'http://localhost:3000/photos?_page=1&_limit=10';
+const notFoundErrorUrl = 'https://httpstat.us/404';
+const forbiddenErrorUrl = 'https://httpstat.us/403';
+const serverErrorUrl = 'https://httpstat.us/500';
+
+// axios
+//   .get(forbiddenErrorUrl)
+//   .then((response) => response.data)
+//   .then((data) => console.log(data))
+//   .catch(error => console.log(error))
+// axios
+//   .get(notFoundErrorUrl)
+//   .then((response) => response.data)
+//   .then((data) => console.log(data))
+//   .catch(error => console.log(error))
+// axios
+//   .get(serverErrorUrl)
+//   .then((response) => response.data)
+//   .then((data) => console.log(data))
+//   .catch(error => console.log(error))
+// axios
+//   .get(okUrl)
+//   .then((response) => response.data)
+//   .then((data) => console.log(data));
+
+
+// fetch(okUrl).then((response) => console.log(response));
+// fetch(serverErrorUrl)
+//   .then((response) => {
+//     console.log(response);
+//     return response;
+//   })
+//   .then(handleErrors)
+//   .then(parseJSON)
+//   .then((data) => console.log(data))
+//   .catch(error => console.log(error))
+
+// function handleErrors(response) {
+//   if (!response.ok) throw new Error(response.statusText);
+//   return response;
+// }
+// function parseJSON(response) {
+//   return response.json();
+// }
+// fetch(okUrl)
+//   .then((response) => {
+//     console.log(response);
+//     return response;
+//   })
+//   .then((response) => response.json())
+//   .then((data) => console.log(data))
+
+function PhotoList() {
+  const [loading, setLoading] = React.useState(false);
+  const [photos, setPhotos] = React.useState([]);
+  const [error, setError] = React.useState(null);
+
+  function toUserError(error) {
+    console.log('Call API to log the raw error. ', error);
+    return 'There was an error loading the photos.';
+  }
+
+  React.useEffect(() => {
+    setLoading(true);
+
+    fetch(okUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res;
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        setError(null);
+        setPhotos(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        const userError = toUserError(error);
+        setError(userError);
+        setLoading(false);
+      })
+  }, []);
+
+  if (error) {
+    return <div>{error}</div>
+  } else if (loading) {
+    return <div>Loading...</div>
+  } else {
+    return (
+      <ul>
+        {photos?.map((photo) => {
+          return (
+            <li key={photo.id}>
+              <img src={photo.thumbnailUrl} alt={photo.title}/>
+              <h3>{photo.title}</h3>
+            </li>
+          )
+        })}
+      </ul>
+    )
   }
 }
 
-function App() {
-  return (
-    <div>
-      <HelloWorld/>
-      <HelloWorld/>
-      <HelloWorld/>
-      <HelloWorld/>
-    </div>
-  )
-}
-
-root.render(<App/>)
+root.render(<PhotoList/>);
